@@ -1,7 +1,7 @@
 "use client";
 import { motion, AnimatePresence } from "framer-motion";
 import { Anton, Cinzel } from "next/font/google";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 
 const anton = Anton({ weight: "400", subsets: ["latin"], display: "swap" });
 const cinzel = Cinzel({ weight: ["400", "700"], subsets: ["latin"], display: "swap" });
@@ -17,6 +17,15 @@ type ShopOverlayProps = {
 
 export default function ShopOverlay({ item, onClose, cartCount = 0, onAddToCart, onOpenCart, onChangeItem }: ShopOverlayProps) {
   const [activeTab, setActiveTab] = useState("details");
+  const overlayRef = useRef<HTMLDivElement>(null);
+
+  // When the requested item changes, scroll back to top to make it obvious the product loaded
+  useEffect(() => {
+    if (overlayRef.current) {
+      overlayRef.current.scrollTo({ top: 0, behavior: "smooth" });
+    }
+    setActiveTab("details");
+  }, [item]);
 
   if (!item) return null;
 
@@ -42,6 +51,7 @@ export default function ShopOverlay({ item, onClose, cartCount = 0, onAddToCart,
   return (
     <AnimatePresence>
       <motion.div
+        ref={overlayRef}
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: 30 }}

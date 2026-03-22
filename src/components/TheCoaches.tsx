@@ -1,7 +1,8 @@
 "use client";
 import { motion } from "framer-motion";
 import { Anton } from "next/font/google";
-import Link from "next/link";
+import { useState } from "react";
+import CoachingOverlay, { CoachData } from "./CoachingOverlay";
 
 const anton = Anton({ weight: "400", subsets: ["latin"], display: "swap" });
 
@@ -52,6 +53,8 @@ const cardVariants = {
 };
 
 export default function TheCoaches() {
+  const [selectedCoach, setSelectedCoach] = useState<CoachData | null>(null);
+
   return (
     <section id="coaching" className="relative bg-[#0e0d0d] py-24 md:py-32 overflow-hidden z-20">
 
@@ -154,19 +157,25 @@ export default function TheCoaches() {
 
                 {/* Hover CTA */}
                 <div className="mt-8 overflow-hidden">
-                  <Link
-                    href={`/coaches/${coach.slug}`}
+                  <button
+                    onClick={() => setSelectedCoach(coach)}
                     className="relative overflow-hidden flex w-full items-center justify-center py-4 bg-transparent border border-white/20 text-white text-xs tracking-[0.2em] uppercase font-bold rounded-full group/btn"
                   >
-                    <span className="relative z-10 transition-colors duration-300 text-white">View Profile</span>
+                    <span className="relative z-10 transition-colors duration-300 text-white">Book Session</span>
                     <div className="absolute inset-x-0 bottom-0 h-0 transition-all duration-300 ease-out group-hover/btn:h-full z-0" style={{ backgroundImage: 'linear-gradient(to top, #400000, #8A0303, #C41A1A)' }} />
-                  </Link>
+                  </button>
                 </div>
               </div>
             </motion.div>
           ))}
         </motion.div>
       </div>
+
+      <CoachingOverlay 
+        isOpen={!!selectedCoach} 
+        coach={selectedCoach} 
+        onClose={() => setSelectedCoach(null)} 
+      />
     </section>
   );
 }

@@ -1,0 +1,36 @@
+
+> vanguard@0.1.0 dev
+> next dev
+
+▲ Next.js 16.2.0 (Turbopack)
+- Local:         http://localhost:3000
+- Network:       http://192.168.1.58:3000
+✓ Ready in 208ms
+
+ GET /contact 200 in 1523ms (next.js: 1380ms, application-code: 143ms)
+ GET / 200 in 541ms (next.js: 471ms, application-code: 70ms)
+[browser] Please ensure that the container has a non-static position, like 'relative', 'fixed', or 'absolute' to ensure scroll offset is calculated correctly. (file:///Users/willdavis/Desktop/AGENCY/Vanguard/Vanguard code/.next/dev/static/chunks/node_modules_next_dist_115brz8._.js:2431:13)
+ GET /noise.png 404 in 358ms (next.js: 331ms, application-code: 27ms)
+ GET /facility/the-stage 200 in 674ms (next.js: 653ms, application-code: 21ms)
+[browser] Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior (file:///Users/willdavis/Desktop/AGENCY/Vanguard/Vanguard code/.next/dev/static/chunks/node_modules_next_dist_115brz8._.js:2431:13)
+ GET /facility/the-stage 200 in 39ms (next.js: 5ms, application-code: 34ms)
+ GET /facility/the-stage 200 in 63ms (next.js: 6ms, application-code: 57ms)
+ GET / 200 in 78ms (next.js: 5ms, application-code: 73ms)
+[browser] Please ensure that the container has a non-static position, like 'relative', 'fixed', or 'absolute' to ensure scroll offset is calculated correctly. (file:///Users/willdavis/Desktop/AGENCY/Vanguard/Vanguard code/.next/dev/static/chunks/node_modules_next_dist_115brz8._.js:2431:13)
+ GET / 200 in 51ms (next.js: 3ms, application-code: 48ms)
+[browser] Please ensure that the container has a non-static position, like 'relative', 'fixed', or 'absolute' to ensure scroll offset is calculated correctly. (file:///Users/willdavis/Desktop/AGENCY/Vanguard/Vanguard code/.next/dev/static/chunks/node_modules_next_dist_115brz8._.js:2431:13)
+ GET /facility/the-stage 200 in 25ms (next.js: 7ms, application-code: 19ms)
+[browser] Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior (file:///Users/willdavis/Desktop/AGENCY/Vanguard/Vanguard code/.next/dev/static/chunks/node_modules_next_dist_115brz8._.js:2431:13)
+✓ Compiled in 51ms
+✓ Compiled in 35ms
+ GET / 200 in 50ms (next.js: 11ms, application-code: 39ms)
+ GET /facility/the-stage 200 in 80ms (next.js: 12ms, application-code: 69ms)
+ GET / 200 in 45ms (next.js: 3ms, application-code: 41ms)
+[browser] Please ensure that the container has a non-static position, like 'relative', 'fixed', or 'absolute' to ensure scroll offset is calculated correctly. (file:///Users/willdavis/Desktop/AGENCY/Vanguard/Vanguard code/.next/dev/static/chunks/node_modules_next_dist_115brz8._.js:2431:13)
+ GET / 200 in 52ms (next.js: 3ms, application-code: 49ms)
+[browser] Please ensure that the container has a non-static position, like 'relative', 'fixed', or 'absolute' to ensure scroll offset is calculated correctly. (file:///Users/willdavis/Desktop/AGENCY/Vanguard/Vanguard code/.next/dev/static/chunks/node_modules_next_dist_115brz8._.js:2431:13)
+ GET /noise.png 404 in 38ms (next.js: 6ms, application-code: 31ms)
+ GET / 200 in 12ms (next.js: 5ms, application-code: 7ms)
+ GET /facility/the-stage 200 in 65ms (next.js: 8ms, application-code: 57ms)
+ GET / 200 in 51ms (next.js: 5ms, application-code: 46ms)
+[browser] Please ensure that the container has a non-static position, like 'relative', 'fixed', or 'absolute' to ensure scroll offset is calculated correctly. (file:///Users/willdavis/Desktop/AGENCY/Vanguard/Vanguard code/.next/dev/static/chunks/node_modules_next_dist_115brz8._.js:2431:13)

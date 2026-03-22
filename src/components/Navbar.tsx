@@ -1,6 +1,7 @@
 "use client";
 import { useState, useRef, useEffect } from "react";
 import ShopOverlay from "./ShopOverlay";
+import CheckoutOverlay from "./CheckoutOverlay";
 import { motion, AnimatePresence } from "framer-motion";
 import { Anton, Cinzel } from "next/font/google";
 
@@ -103,8 +104,11 @@ function AccountDropdown({ onClose }: { onClose: () => void }) {
 /* ─── Cart Drawer ───────────────────────────────────────────────────────────── */
 type CartItem = { id: number, name: string, barber: string, date: string, price: number };
 
-function CartDrawer({ onClose, items, setItems }: { onClose: () => void, items: CartItem[], setItems: React.Dispatch<React.SetStateAction<CartItem[]>> }) {
-  const subtotal = items.reduce((s, i) => s + i.price, 0);
+function CartDrawer({ onClose, items, setItems, onCheckout }: { onClose: () => void, items: CartItem[], setItems: React.Dispatch<React.SetStateAction<CartItem[]>>, onCheckout: () => void }) {
+  const shopItemsTotal = items.filter(i => i.barber === "Vanguard Supply").reduce((s, i) => s + i.price, 0);
+  const otherItemsTotal = items.filter(i => i.barber !== "Vanguard Supply").reduce((s, i) => s + i.price, 0);
+  const discount = shopItemsTotal * 0.25;
+  const subtotal = shopItemsTotal + otherItemsTotal - discount;
 
   return (
     <>
@@ -202,14 +206,27 @@ function CartDrawer({ onClose, items, setItems }: { onClose: () => void, items: 
             {/* Divider */}
             <div className="h-px bg-gradient-to-r from-transparent via-[#8A0303]/15 to-transparent" />
 
+            {discount > 0 && (
+              <div className="flex justify-between items-center text-[10px] text-[#C41A1A] font-bold uppercase tracking-wide">
+                <span>Flash Sale (25% Shop)</span>
+                <span>-£{discount.toFixed(2)}</span>
+              </div>
+            )}
+
             {/* Total */}
             <div className="flex justify-between items-center">
               <span className="text-xs uppercase tracking-[0.25em] text-[#8A0303]/50">Total</span>
-              <span className="text-2xl text-[#F0EDE8]">£{subtotal}</span>
+              <span className="text-2xl text-[#F0EDE8]">£{subtotal.toFixed(2)}</span>
             </div>
 
             {/* Checkout CTA */}
-            <button className="w-full py-4 bg-[#8A0303] text-[#F0EDE8] text-xs font-bold uppercase tracking-[0.25em] hover:bg-[#a93226] transition-colors">
+            <button 
+              onClick={() => {
+                onClose();
+                onCheckout();
+              }}
+              className="w-full py-4 bg-[#8A0303] text-[#F0EDE8] text-xs font-bold uppercase tracking-[0.25em] hover:bg-[#a93226] transition-colors"
+            >
               Proceed to Checkout
             </button>
             <button onClick={onClose} className="w-full py-3 text-[9px] uppercase tracking-[0.25em] text-[#8A0303]/30 hover:text-[#8A0303] transition-colors border border-[#8A0303]/8">
@@ -246,12 +263,12 @@ function NavDrawer({ onClose }: { onClose: () => void }) {
 
         <div className="flex flex-col gap-1 mt-4">
           {[
-            ["Info", "#info"],
-            ["The Gym", "#gym"],
-            ["Coaching", "#coaching"],
-            ["Location", "#location"],
-            ["Shop", "#shop"],
-            ["Contact Us", "#location"]
+            ["The Gym", "/#gym"],
+            ["Memberships", "/#info"],
+            ["Coaching", "/#coaching"],
+            ["Location", "/#location"],
+            ["Shop", "/#shop"],
+            ["Contact Us", "/contact"]
           ].map(([label, href]) => (
             <a key={label} href={href} onClick={onClose}
               className={`py-4 text-2xl font-light text-[#F0EDE8]/80 hover:text-[#8A0303] hover:pl-3 transition-all duration-300 border-b border-[#8A0303]/10 last:border-0 tracking-[0.15em] uppercase`}>
@@ -274,9 +291,35 @@ export default function Navbar() {
   const [searchOpen, setSearchOpen]   = useState(false);
   const [accountOpen, setAccountOpen] = useState(false);
   const [cartOpen, setCartOpen]       = useState(false);
+  const [checkoutOpen, setCheckoutOpen] = useState(false);
+  const [showPromo, setShowPromo]     = useState(true);
   const [shopOverlayItem, setShopOverlayItem] = useState<string | null>(null);
+
+  useEffect(() => {
+    const handleOpenShop = (e: Event) => {
+      const customEvent = e as CustomEvent;
+      setShopOverlayItem(customEvent.detail?.category || 'merch');
+    };
+    window.addEventListener("open-shop", handleOpenShop);
+    return () => window.removeEventListener("open-shop", handleOpenShop);
+  }, []);
   const [cartItems, setCartItems] = useState<{ id: number, name: string, barber: string, date: string, price: number }[]>([]);
   const accountRef = useRef<HTMLDivElement>(null);
+
+  // Listen for global "add-to-cart" events (e.g., from MembershipOverlay)
+  useEffect(() => {
+    const handleAddToCart = (e: Event) => {
+      const customEvent = e as CustomEvent;
+      const { name, price, type } = customEvent.detail;
+      setCartItems((prev) => [
+        ...prev,
+        { id: Date.now(), name, barber: type || "Vanguard HQ", date: "Recurring Setup", price }
+      ]);
+      setCartOpen(true);
+    };
+    window.addEventListener("add-to-cart", handleAddToCart);
+    return () => window.removeEventListener("add-to-cart", handleAddToCart);
+  }, []);
 
   // Close account dropdown on outside click
   useEffect(() => {
@@ -293,15 +336,53 @@ export default function Navbar() {
   return (
     <>
       {/* Full-width banner bar */}
-      <header className="fixed top-0 left-0 right-0 z-50">
+      <header className="fixed top-0 left-0 right-0 z-50 flex flex-col">
+        
+        {/* Promo Banner */}
+        <AnimatePresence>
+          {showPromo && (
+            <motion.div
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: "auto", opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              className="bg-[#C41A1A] text-white relative flex items-center overflow-hidden"
+            >
+              <div className="flex-1 overflow-hidden whitespace-nowrap py-1.5 relative">
+                <style>{`
+                  @keyframes promo-marquee {
+                    0% { transform: translateX(100vw); }
+                    100% { transform: translateX(-100%); }
+                  }
+                  .animate-promo-marquee {
+                    display: inline-block;
+                    animation: promo-marquee 15s linear infinite;
+                  }
+                `}</style>
+                <button onClick={() => setShopOverlayItem('chalk')} className="animate-promo-marquee text-[10px] md:text-xs font-bold tracking-[0.3em] uppercase no-underline hover:underline underline-offset-4 decoration-white hover:text-white/80 transition-all cursor-pointer bg-transparent border-none appearance-none">
+                  FLASH SALE 25% OFF SHOP
+                </button>
+              </div>
+              <button 
+                onClick={() => setShowPromo(false)} 
+                className="absolute right-4 md:right-8 z-10 p-1 hover:bg-black/20 rounded-full transition-colors"
+                aria-label="Close promo"
+              >
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                  <path d="M18 6L6 18M6 6l12 12"/>
+                </svg>
+              </button>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
         <div className="relative bg-black/80 backdrop-blur-lg shadow-[0_10px_40px_rgba(0,0,0,0.5)] border-b border-[#8A0303]/15">
           <div className="max-w-[1500px] mx-auto px-5 h-20 flex items-center justify-between">
 
             {/* ── LEFT: Navigation Links ── */}
             <div className="hidden md:flex items-center justify-between px-8 w-2/5">
-              <a href="#info" className={`text-[#F0EDE8]/85 hover:text-[#8A0303] text-lg font-light uppercase tracking-[0.15em] transition-colors`}>Info</a>
-              <a href="#gym" className={`text-[#F0EDE8]/85 hover:text-[#8A0303] text-lg font-light uppercase tracking-[0.15em] transition-colors`}>The Gym</a>
-              <a href="#coaching" className={`text-[#F0EDE8]/85 hover:text-[#8A0303] text-lg font-light uppercase tracking-[0.15em] transition-colors`}>Coaching</a>
+              <a href="/#gym" className={`text-[#F0EDE8]/85 hover:text-[#8A0303] text-lg font-light uppercase tracking-[0.15em] transition-colors`}>The Gym</a>
+              <a href="/#info" className={`text-[#F0EDE8]/85 hover:text-[#8A0303] text-lg font-light uppercase tracking-[0.15em] transition-colors`}>Memberships</a>
+              <a href="/#coaching" className={`text-[#F0EDE8]/85 hover:text-[#8A0303] text-lg font-light uppercase tracking-[0.15em] transition-colors`}>Coaching</a>
             </div>
 
             {/* ── MOBILE LEFT: Hamburger ── */}
@@ -325,7 +406,7 @@ export default function Navbar() {
 
             {/* ── RIGHT: Navigation Links ── */}
             <div className="hidden md:flex items-center justify-between px-8 w-2/5">
-              <a href="#location" className={`text-[#F0EDE8]/85 hover:text-[#8A0303] text-lg font-light uppercase tracking-[0.15em] transition-colors`}>Location</a>
+              <a href="/#location" className={`text-[#F0EDE8]/85 hover:text-[#8A0303] text-lg font-light uppercase tracking-[0.15em] transition-colors`}>Location</a>
               
               {/* Shop Dropdown */}
               <div className="relative group/shop py-6">
@@ -343,7 +424,7 @@ export default function Navbar() {
                 </div>
               </div>
 
-              <a href="#location" className={`text-[#F0EDE8]/85 hover:text-[#8A0303] text-lg font-light uppercase tracking-[0.15em] transition-colors`}>Contact Us</a>
+              <a href="/contact" className={`text-[#F0EDE8]/85 hover:text-[#8A0303] text-lg font-light uppercase tracking-[0.15em] transition-colors`}>Contact Us</a>
             </div>
 
             {/* ── MOBILE RIGHT: Empty spacer ── */}
@@ -366,7 +447,7 @@ export default function Navbar() {
 
       {/* Cart Drawer (right) */}
       <AnimatePresence>
-        {cartOpen && <CartDrawer onClose={() => setCartOpen(false)} items={cartItems} setItems={setCartItems} />}
+        {cartOpen && <CartDrawer onClose={() => setCartOpen(false)} items={cartItems} setItems={setCartItems} onCheckout={() => setCheckoutOpen(true)} />}
       </AnimatePresence>
       
       {/* Full Screen Shop Implementation */}
@@ -380,6 +461,12 @@ export default function Navbar() {
           setCartOpen(true);
         }}
         onChangeItem={(newItem) => setShopOverlayItem(newItem)}
+      />
+
+      <CheckoutOverlay 
+        isOpen={checkoutOpen}
+        onClose={() => setCheckoutOpen(false)}
+        items={cartItems}
       />
     </>
   );

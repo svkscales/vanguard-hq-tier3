@@ -2,6 +2,9 @@
 import { motion } from "framer-motion";
 import { Anton } from "next/font/google";
 import Link from "next/link";
+import { useState, useEffect } from "react";
+import MembershipOverlay, { PlanData } from "./MembershipOverlay";
+import VanguardCardOverlay from "./VanguardCardOverlay";
 
 const anton = Anton({ weight: "400", subsets: ["latin"], display: "swap" });
 
@@ -35,6 +38,25 @@ const classes = [
 ];
 
 export default function Pricing() {
+  const [overlayItem, setOverlayItem] = useState<PlanData | null>(null);
+  const [cardOverlayOpen, setCardOverlayOpen] = useState(false);
+
+  const allPlans: PlanData[] = [
+    ...memberships.map(m => ({ ...m, type: "membership" as const })),
+    ...classes.map(c => ({ ...c, type: "class" as const, price: "£25", period: "PER SESSION" }))
+  ];
+
+  useEffect(() => {
+    const handleOpenMembership = (e: Event) => {
+      const customEvent = e as CustomEvent;
+      const planName = customEvent.detail?.plan || 'STANDARD ACCESS';
+      const plan = allPlans.find(p => p.name === planName) || null;
+      setOverlayItem(plan);
+    };
+    window.addEventListener('open-membership-overlay', handleOpenMembership);
+    return () => window.removeEventListener('open-membership-overlay', handleOpenMembership);
+  }, []);
+
   return (
     <section id="info" className="relative py-24 md:py-32 bg-[#0e0d0d] overflow-hidden z-20">
       <div className="max-w-[1600px] mx-auto px-4 sm:px-8 relative z-10 w-full">
@@ -79,10 +101,10 @@ export default function Pricing() {
                     ))}
                   </ul>
                   
-                  <Link href="#" className={`relative overflow-hidden block w-full py-4 text-center text-xs tracking-[0.2em] uppercase font-medium rounded-full transition-all duration-300 border ${item.popular ? 'border-[#C41A1A] bg-[#8A0303]' : 'border-white/20 bg-transparent'} group/btn`}>
+                  <button onClick={(e) => { e.preventDefault(); setOverlayItem(allPlans.find(p => p.name === item.name) || null); }} className={`relative overflow-hidden block w-full py-4 text-center text-xs tracking-[0.2em] uppercase font-medium rounded-full transition-all duration-300 border ${item.popular ? 'border-[#C41A1A] bg-[#8A0303]' : 'border-white/20 bg-transparent'} group/btn`}>
                     <span className="relative z-10 transition-colors duration-300 text-white">Select Plan</span>
                     <div className="absolute inset-x-0 bottom-0 h-0 transition-all duration-300 ease-out group-hover/btn:h-full z-0" style={{ backgroundImage: 'linear-gradient(to top, #400000, #8A0303, #C41A1A)' }} />
-                  </Link>
+                  </button>
                 </div>
               ))}
             </div>
@@ -119,10 +141,10 @@ export default function Pricing() {
                     ))}
                   </ul>
                   
-                  <Link href="#" className="relative overflow-hidden block w-full py-4 text-center text-xs tracking-[0.2em] uppercase font-medium rounded-full bg-transparent border border-white/20 text-white group/btn">
+                  <button onClick={(e) => { e.preventDefault(); setOverlayItem(allPlans.find(p => p.name === item.name) || null); }} className="relative overflow-hidden block w-full py-4 text-center text-xs tracking-[0.2em] uppercase font-medium rounded-full bg-transparent border border-white/20 text-white group/btn">
                     <span className="relative z-10 transition-colors duration-300 text-white">Book Class</span>
                     <div className="absolute inset-x-0 bottom-0 h-0 transition-all duration-300 ease-out group-hover/btn:h-full z-0" style={{ backgroundImage: 'linear-gradient(to top, #400000, #8A0303, #C41A1A)' }} />
-                  </Link>
+                  </button>
                 </div>
               ))}
             </div>
@@ -150,16 +172,30 @@ export default function Pricing() {
             <p className="text-[#F0EDE8]/90 text-xs sm:text-sm md:text-base font-bold tracking-[0.2em] max-w-lg mb-10 drop-shadow-sm uppercase">
               Official forged steel membership card. Get your steel membership card today.
             </p>
-            <Link
-              href="#"
+            <button
+              onClick={(e) => { e.preventDefault(); setCardOverlayOpen(true); }}
               className="px-10 py-3.5 bg-white text-black font-bold uppercase tracking-[0.2em] text-xs md:text-sm rounded-full hover:bg-transparent hover:text-white border-2 border-transparent hover:border-white transition-all duration-300 shadow-[0_0_20px_rgba(255,255,255,0.15)] hover:shadow-none"
             >
               Get Your Card
-            </Link>
+            </button>
           </div>
         </motion.div>
 
       </div>
+
+      <MembershipOverlay 
+        isOpen={!!overlayItem} 
+        item={overlayItem} 
+        onClose={() => setOverlayItem(null)} 
+        onChangeItem={(newItem) => setOverlayItem(newItem)} 
+        allPlans={allPlans} 
+      />
+
+      <VanguardCardOverlay 
+        isOpen={cardOverlayOpen} 
+        onClose={() => setCardOverlayOpen(false)} 
+        allPlans={allPlans} 
+      />
     </section>
   );
 }

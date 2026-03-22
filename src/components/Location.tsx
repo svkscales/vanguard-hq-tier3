@@ -122,7 +122,11 @@ export default function Location() {
               Membership, training, or brand inquiries.
             </p>
 
-            <form className="flex flex-col gap-4 relative z-10" onSubmit={(e) => e.preventDefault()}>
+            <form className="flex flex-col gap-4 relative z-10" onSubmit={(e) => {
+              e.preventDefault();
+              window.dispatchEvent(new CustomEvent("show-toast", { detail: "Message Sent" }));
+              (e.target as HTMLFormElement).reset();
+            }}>
               <input 
                 type="text" 
                 placeholder="Name" 

@@ -4,25 +4,33 @@ import { MotionValue, useTransform } from "framer-motion";
 
 export default function HeroCanvas({ progress }: { progress: MotionValue<number> }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const [imagesLoaded, setImagesLoaded] = useState(false);
   const [images, setImages] = useState<HTMLImageElement[]>([]);
-  
-  // Directly bind the passed-in progress (0 to 1) to frame 0 to 165
   const frameIndex = useTransform(progress, [0, 1], [0, 165]);
 
   useEffect(() => {
-    const preload = () => {
-      const loaded: HTMLImageElement[] = [];
-      for (let i = 0; i < 166; i++) {
-        const img = new Image();
-        img.src = `/hero-sequence/frame_${i.toString().padStart(3, '0')}_delay-0.041s.jpg`;
-        if (i === 0) {
-          img.onload = () => setImages([...loaded]);
-        }
-        loaded.push(img);
-      }
-      setImages(loaded);
-    };
-    preload();
+    const loaded: HTMLImageElement[] = [];
+    let loadedCount = 0;
+    
+    for (let i = 0; i < 166; i++) {
+      const img = new Image();
+      img.src = `/hero-sequence/frame_${i.toString().padStart(3, '0')}_delay-0.041s.jpg`;
+      
+      img.onload = () => {
+        loadedCount++;
+        // As soon as the first frame loads, trigger a render
+        if (i === 0) setImagesLoaded(prev => !prev);
+      };
+      
+      loaded.push(img);
+    }
+    
+    // If the browser cached the image instantly, force the render flag
+    if (loaded[0].complete) {
+      setImagesLoaded(true);
+    }
+    
+    setImages(loaded);
   }, []);
 
   useEffect(() => {
@@ -38,6 +46,9 @@ export default function HeroCanvas({ progress }: { progress: MotionValue<number>
       canvas.width = window.innerWidth * dpr;
       canvas.height = window.innerHeight * dpr;
       ctx.scale(dpr, dpr);
+
+      // Do not draw if image lacks layout dims
+      if (!img.width || !img.height) return;
 
       const imgRatio = img.width / img.height;
       const canvasRatio = window.innerWidth / window.innerHeight;
@@ -56,11 +67,11 @@ export default function HeroCanvas({ progress }: { progress: MotionValue<number>
     };
 
     const unsub = frameIndex.on("change", render);
-    // Initial render
+    // Force initial render especially if imagesLoaded flag toggled
     render();
     window.addEventListener("resize", render);
     return () => { unsub(); window.removeEventListener("resize", render); };
-  }, [images, frameIndex]);
+  }, [images, frameIndex, imagesLoaded]);
 
   return <canvas ref={canvasRef} className="absolute inset-0 w-full h-full z-[2] object-cover brightness-[0.8] contrast-[1.1]" />;
 }
