@@ -76,7 +76,7 @@ export default function TheCoaches() {
           className="text-center mb-16 md:mb-24 flex flex-col items-center"
         >
           <div className="w-16 h-1 bg-[#C41A1A] mb-6" />
-          <h2 className={`text-5xl md:text-7xl lg:text-8xl uppercase tracking-widest text-white drop-shadow-md ${anton.className}`}>
+          <h2 className={`text-4xl md:text-7xl lg:text-8xl uppercase tracking-widest text-white drop-shadow-md ${anton.className}`}>
             PERSONAL TRAINERS
           </h2>
           <p className="mt-6 text-sm md:text-base text-[#F0EDE8]/60 uppercase tracking-[0.2em] max-w-2xl font-medium">
@@ -124,7 +124,7 @@ export default function TheCoaches() {
                 
                 {/* Coach Name Overlay inside image area */}
                 <div className="absolute bottom-6 left-6 right-6 z-20">
-                  <h3 className={`${anton.className} text-4xl sm:text-5xl text-white tracking-wide uppercase drop-shadow-lg`}>
+                  <h3 className={`${anton.className} text-3xl sm:text-5xl text-white tracking-wide uppercase drop-shadow-lg`}>
                     {coach.name}
                   </h3>
                   <p className="text-[#C41A1A] text-xs sm:text-sm tracking-[0.2em] font-bold uppercase mt-1 drop-shadow-md">

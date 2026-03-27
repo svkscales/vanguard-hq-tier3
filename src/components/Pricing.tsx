@@ -72,7 +72,7 @@ export default function Pricing() {
             transition={{ duration: 0.8, ease: "easeOut" }}
             className="flex flex-col"
           >
-            <h2 className={`${anton.className} text-6xl md:text-7xl text-white mb-8 tracking-widest uppercase drop-shadow-md`}>
+            <h2 className={`${anton.className} text-5xl md:text-7xl text-white mb-8 tracking-widest uppercase drop-shadow-md`}>
               Memberships
             </h2>
             
@@ -118,7 +118,7 @@ export default function Pricing() {
             transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
             className="flex flex-col"
           >
-            <h2 className={`${anton.className} text-6xl md:text-7xl text-[#8A0303] mb-8 tracking-widest uppercase drop-shadow-md`}>
+            <h2 className={`${anton.className} text-5xl md:text-7xl text-[#8A0303] mb-8 tracking-widest uppercase drop-shadow-md`}>
               Classes
             </h2>
             

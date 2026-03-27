@@ -14,9 +14,9 @@ function CompactShieldLogo() {
     <svg viewBox="0 0 110 70" className="w-24 h-auto md:w-32 drop-shadow-md" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="SVK Vanguard">
       <defs>
         <linearGradient id={`${gradId}-red`} x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0%" stopColor="#C41A1A" />
-          <stop offset="50%" stopColor="#8A0303" />
-          <stop offset="100%" stopColor="#400000" />
+          <stop offset="0%" stopColor="#FF5A5A" />
+          <stop offset="50%" stopColor="#C41A1A" />
+          <stop offset="100%" stopColor="#8A0303" />
         </linearGradient>
       </defs>
       <text y="55" className={cinzel.className} textAnchor="middle" fill="#FFFFFF">
@@ -98,11 +98,11 @@ export default function Footer() {
                 FIND OUT MORE
               </h4>
               <Link href="#info" className="text-[#F0EDE8]/70 hover:text-[#C41A1A] transition-colors text-[11px] md:text-xs tracking-widest uppercase font-bold">About</Link>
-              <button onClick={() => window.dispatchEvent(new CustomEvent('open-membership-overlay', { detail: { plan: 'STANDARD ACCESS' } }))} className="text-left text-[#F0EDE8]/70 hover:text-[#C41A1A] transition-colors text-[11px] md:text-xs tracking-widest uppercase font-bold">Memberships</button>
+              <button onClick={() => window.dispatchEvent(new CustomEvent('open-membership-overlay', { detail: { plan: 'STANDARD ACCESS' } }))} className="text-[#F0EDE8]/70 hover:text-[#C41A1A] transition-colors text-[11px] md:text-xs tracking-widest uppercase font-bold">Memberships</button>
               <Link href="#info" className="text-[#F0EDE8]/70 hover:text-[#C41A1A] transition-colors text-[11px] md:text-xs tracking-widest uppercase font-bold">Passes</Link>
-              <button onClick={() => window.dispatchEvent(new CustomEvent('open-shop', { detail: { category: 'merch' } }))} className="text-left text-[#F0EDE8]/70 hover:text-[#C41A1A] transition-colors text-[11px] md:text-xs tracking-widest uppercase font-bold">Shop</button>
+              <button onClick={() => window.dispatchEvent(new CustomEvent('open-shop', { detail: { category: 'merch' } }))} className="text-[#F0EDE8]/70 hover:text-[#C41A1A] transition-colors text-[11px] md:text-xs tracking-widest uppercase font-bold">Shop</button>
               <Link href="#coaching" className="text-[#F0EDE8]/70 hover:text-[#C41A1A] transition-colors text-[11px] md:text-xs tracking-widest uppercase font-bold">Personal Training</Link>
-              <a href="/facility/the-stage" className="text-left text-[#F0EDE8]/70 hover:text-[#C41A1A] transition-colors text-[11px] md:text-xs tracking-widest uppercase font-bold">Posing Room</a>
+              <a href="/facility/the-stage" className="text-[#F0EDE8]/70 hover:text-[#C41A1A] transition-colors text-[11px] md:text-xs tracking-widest uppercase font-bold">Posing Room</a>
               <Link href="#location" className="text-[#F0EDE8]/70 hover:text-[#C41A1A] transition-colors text-[11px] md:text-xs tracking-widest uppercase font-bold">Contact</Link>
             </div>
             

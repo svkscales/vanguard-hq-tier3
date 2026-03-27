@@ -134,7 +134,7 @@ export default function ShopOverlay({ item, onClose, cartCount = 0, onAddToCart,
           <div className="w-full lg:w-1/2 flex flex-col pt-8 lg:pt-12">
              <div className="mb-8">
                <p className="text-[#C41A1A] text-xs font-bold tracking-[0.3em] uppercase mb-3">Vanguard Supply</p>
-               <h1 className={`${anton.className} text-5xl md:text-7xl text-white uppercase tracking-widest drop-shadow-md mb-6`}>
+               <h1 className={`${anton.className} text-4xl md:text-7xl text-white uppercase tracking-widest drop-shadow-md mb-6`}>
                  {productData.title}
                </h1>
                <div className="text-3xl md:text-4xl text-[#F0EDE8] font-bold mb-8 font-serif italic tracking-wide">

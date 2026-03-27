@@ -12,12 +12,12 @@ const cinzel = Cinzel({ weight: ["400", "700"], subsets: ["latin"], display: "sw
 function ShieldLogo({ id = "nav" }: { id?: string }) {
   const gradId = `chromeGrad-${id}`;
   return (
-    <svg viewBox="0 0 110 70" className="h-10 md:h-14 lg:h-16 w-auto drop-shadow-md" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="SVK Vanguard">
+    <svg viewBox="0 0 110 70" className="h-8 md:h-14 lg:h-16 w-auto drop-shadow-md" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="SVK Vanguard">
       <defs>
         <linearGradient id={`${gradId}-red`} x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0%" stopColor="#C41A1A" />
-          <stop offset="50%" stopColor="#8A0303" />
-          <stop offset="100%" stopColor="#400000" />
+          <stop offset="0%" stopColor="#FF5A5A" />
+          <stop offset="50%" stopColor="#C41A1A" />
+          <stop offset="100%" stopColor="#8A0303" />
         </linearGradient>
       </defs>
 
@@ -398,7 +398,7 @@ export default function Navbar() {
             </div>
 
             {/* ── CENTRE: Vanguard Shield ── */}
-            <div className="flex justify-center w-1/5">
+            <div className="flex justify-center w-1/3 md:w-1/5">
               <a href="/#home" aria-label="Vanguard home" className="opacity-90 hover:opacity-100 hover:scale-105 transition-all duration-300">
                 <ShieldLogo />
               </a>

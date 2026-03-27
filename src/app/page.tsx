@@ -81,7 +81,7 @@ export default function Home() {
               className="absolute inset-0 flex items-center justify-center p-4"
             >
               <span
-                className={`text-6xl sm:text-7xl md:text-8xl lg:text-[9rem] xl:text-[11rem] tracking-widest text-[#F0EDE8] opacity-90 select-none text-center ${anton.className}`}
+                className={`text-[3.5rem] sm:text-6xl md:text-8xl lg:text-[9rem] xl:text-[11rem] tracking-widest text-[#F0EDE8] opacity-90 select-none text-center ${anton.className}`}
                 style={{ textShadow: "0 20px 50px rgba(0,0,0,0.8)" }}
               >
                 VANGUARD
@@ -97,9 +97,9 @@ export default function Home() {
                 <svg viewBox="0 0 200 200" className="w-[180px] sm:w-[250px] md:w-[350px] lg:w-[450px] h-auto drop-shadow-[0_20px_50px_rgba(0,0,0,0.8)] opacity-95" aria-label="Vanguard Chevron">
                   <defs>
                     <linearGradient id="redMetallic" x1="0" y1="0" x2="1" y2="1">
-                      <stop offset="0%" stopColor="#C41A1A" />
-                      <stop offset="50%" stopColor="#8A0303" />
-                      <stop offset="100%" stopColor="#400000" />
+                      <stop offset="0%" stopColor="#FF5A5A" />
+                      <stop offset="50%" stopColor="#C41A1A" />
+                      <stop offset="100%" stopColor="#8A0303" />
                     </linearGradient>
                     <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
                       <feDropShadow dx="0" dy="8" stdDeviation="15" floodColor="#000" floodOpacity="0.8" />

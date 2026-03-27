@@ -43,23 +43,23 @@ export default function HeroCanvas({ progress }: { progress: MotionValue<number>
       const img = images[idx] || images[0];
 
       const dpr = window.devicePixelRatio || 1;
-      canvas.width = window.innerWidth * dpr;
-      canvas.height = window.innerHeight * dpr;
+      canvas.width = canvas.clientWidth * dpr;
+      canvas.height = canvas.clientHeight * dpr;
       ctx.scale(dpr, dpr);
 
       // Do not draw if image lacks layout dims
       if (!img.width || !img.height) return;
 
       const imgRatio = img.width / img.height;
-      const canvasRatio = window.innerWidth / window.innerHeight;
+      const canvasRatio = canvas.clientWidth / canvas.clientHeight;
       let dW, dH, dX, dY;
 
       if (imgRatio > canvasRatio) {
-        dH = window.innerHeight; dW = dH * imgRatio;
-        dX = (window.innerWidth - dW) / 2; dY = 0;
+        dH = canvas.clientHeight; dW = dH * imgRatio;
+        dX = (canvas.clientWidth - dW) / 2; dY = 0;
       } else {
-        dW = window.innerWidth; dH = dW / imgRatio;
-        dX = 0; dY = (window.innerHeight - dH) / 2;
+        dW = canvas.clientWidth; dH = dW / imgRatio;
+        dX = 0; dY = (canvas.clientHeight - dH) / 2;
       }
 
       ctx.clearRect(0, 0, canvas.width, canvas.height);
