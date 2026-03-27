@@ -122,7 +122,7 @@ export default function Home() {
                       fill="#FFFFFF"
                     >
                       <tspan x="45" fontSize="65">S</tspan>
-                      <tspan x="100" fontSize="110" dy="15">V</tspan>
+                      <tspan x="100" fontSize="110" dy="15" className="fill-[#FF0000] md:fill-[url(#redMetallic)]">V</tspan>
                       <tspan x="155" fontSize="65" dy="-15">K</tspan>
                     </text>
                   </g>

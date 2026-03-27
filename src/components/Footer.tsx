@@ -21,7 +21,7 @@ function CompactShieldLogo() {
       </defs>
       <text y="55" className={cinzel.className} textAnchor="middle" fill="#FFFFFF">
         <tspan x="20" fontSize="45">S</tspan>
-        <tspan x="55" fontSize="70" dy="5" fill={`url(#${gradId}-red)`}>V</tspan>
+        <tspan x="55" fontSize="70" dy="5" className="fill-[#FF0000] md:fill-[url(#chromeGrad-footer-red)]">V</tspan>
         <tspan x="90" fontSize="45" dy="-5">K</tspan>
       </text>
     </svg>
