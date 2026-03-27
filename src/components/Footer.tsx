@@ -94,7 +94,7 @@ export default function Footer() {
             
             {/* Find Out More */}
             <div className="flex flex-col space-y-5">
-              <h4 className="text-white font-bold tracking-[0.2em] uppercase text-sm mb-2 border-b-2 border-white/20 pb-2 inline-block w-fit">
+              <h4 className="text-white font-bold tracking-[0.2em] uppercase text-sm mb-2 border-b-2 border-white/20 pb-2 inline-block w-fit mx-auto lg:mx-0">
                 FIND OUT MORE
               </h4>
               <Link href="#info" className="text-[#F0EDE8]/70 hover:text-[#C41A1A] transition-colors text-[11px] md:text-xs tracking-widest uppercase font-bold">About</Link>
@@ -108,7 +108,7 @@ export default function Footer() {
             
             {/* Information */}
             <div className="flex flex-col space-y-5">
-              <h4 className="text-white font-bold tracking-[0.2em] uppercase text-sm mb-2 border-b-2 border-white/20 pb-2 inline-block w-fit">
+              <h4 className="text-white font-bold tracking-[0.2em] uppercase text-sm mb-2 border-b-2 border-white/20 pb-2 inline-block w-fit mx-auto lg:mx-0">
                 INFORMATION
               </h4>
               <Link href="/" className="text-[#F0EDE8]/70 hover:text-[#C41A1A] transition-colors text-[11px] md:text-xs tracking-widest uppercase font-bold">Gym Waiver</Link>

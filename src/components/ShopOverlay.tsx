@@ -72,13 +72,13 @@ export default function ShopOverlay({ item, onClose, cartCount = 0, onAddToCart,
                   <path d="M15 19l-7-7 7-7"/>
                 </svg>
               </button>
-              <h2 className={`${cinzel.className} text-[#F0EDE8] text-xl md:text-2xl font-bold tracking-widest uppercase`}>
-                VANGUARD <span className="text-[#C41A1A] font-light text-base md:text-lg ml-1">SUPPLY</span>
+              <h2 className={`${cinzel.className} text-[#F0EDE8] text-base md:text-2xl font-bold tracking-widest uppercase`}>
+                VANGUARD <span className="text-[#C41A1A] font-light text-sm md:text-lg ml-1">SUPPLY</span>
               </h2>
             </div>
             
             {/* Right: Tools (Search, Account, Basket) */}
-            <div className="flex items-center gap-6">
+            <div className="flex items-center gap-3 md:gap-6">
               <button className="text-[#F0EDE8]/60 hover:text-[#C41A1A] transition-colors" aria-label="Search Shop">
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
                   <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
@@ -131,8 +131,8 @@ export default function ShopOverlay({ item, onClose, cartCount = 0, onAddToCart,
           </div>
 
           {/* Right: Product Details & Checkout Column */}
-          <div className="w-full lg:w-1/2 flex flex-col pt-8 lg:pt-12">
-             <div className="mb-8">
+          <div className="w-full lg:w-1/2 flex flex-col pt-8 lg:pt-12 text-center lg:text-left items-center lg:items-start">
+             <div className="mb-8 flex flex-col items-center lg:items-start">
                <p className="text-[#C41A1A] text-xs font-bold tracking-[0.3em] uppercase mb-3">Vanguard Supply</p>
                <h1 className={`${anton.className} text-4xl md:text-7xl text-white uppercase tracking-widest drop-shadow-md mb-6`}>
                  {productData.title}
@@ -141,13 +141,13 @@ export default function ShopOverlay({ item, onClose, cartCount = 0, onAddToCart,
                  {productData.price}
                </div>
                
-               <p className="text-[#F0EDE8]/70 font-light leading-relaxed max-w-lg mb-10">
+               <p className="text-[#F0EDE8]/70 font-light leading-relaxed max-w-lg mb-10 mx-auto lg:mx-0">
                  {productData.description}
                </p>
              </div>
 
              {/* Add to Basket Action */}
-             <div className="flex flex-col gap-4 mb-16 max-w-lg">
+             <div className="flex flex-col gap-4 mb-16 w-full max-w-lg mx-auto lg:mx-0">
                 <button 
                   onClick={() => onAddToCart && onAddToCart(productData.title, parseFloat(productData.price.replace('£', '')))}
                   className="relative overflow-hidden w-full py-5 border border-[#8A0303]/50 bg-[#8A0303]/10 group/btn transition-all duration-300 hover:border-[#C41A1A]"
@@ -158,7 +158,7 @@ export default function ShopOverlay({ item, onClose, cartCount = 0, onAddToCart,
              </div>
 
              {/* Detailed Accordions (Information Area) */}
-             <div className="border-t border-white/10 max-w-lg flex flex-col">
+             <div className="border-t border-white/10 w-full max-w-lg mx-auto lg:mx-0 flex flex-col text-left">
                
                {/* Details Tab */}
                <div className="border-b border-white/10">

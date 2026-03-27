@@ -267,13 +267,26 @@ function NavDrawer({ onClose }: { onClose: () => void }) {
             ["Memberships", "/#info"],
             ["Coaching", "/#coaching"],
             ["Location", "/#location"],
-            ["Shop", "/#shop"],
+            ["Shop", "ACTION_SHOP"],
             ["Contact Us", "/contact"]
           ].map(([label, href]) => (
-            <a key={label} href={href} onClick={onClose}
-              className={`py-4 text-2xl font-light text-[#F0EDE8]/80 hover:text-[#8A0303] hover:pl-3 transition-all duration-300 border-b border-[#8A0303]/10 last:border-0 tracking-[0.15em] uppercase`}>
-              {label}
-            </a>
+            href === "ACTION_SHOP" ? (
+              <button 
+                key={label}
+                onClick={() => {
+                  window.dispatchEvent(new CustomEvent('open-shop', { detail: { category: 'merch' } }));
+                  onClose();
+                }}
+                className="text-left py-4 text-2xl font-light text-[#F0EDE8]/80 hover:text-[#8A0303] hover:pl-3 transition-all duration-300 border-b border-[#8A0303]/10 last:border-0 tracking-[0.15em] uppercase"
+              >
+                {label}
+              </button>
+            ) : (
+              <a key={label} href={href} onClick={onClose}
+                className="py-4 text-2xl font-light text-[#F0EDE8]/80 hover:text-[#8A0303] hover:pl-3 transition-all duration-300 border-b border-[#8A0303]/10 last:border-0 tracking-[0.15em] uppercase">
+                {label}
+              </a>
+            )
           ))}
         </div>
 
